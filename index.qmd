@@ -1,0 +1,56 @@
+# Introduction
+This page is an output from the '[Productive R Workflow](https://www.productive-r-workflow.com/r/module2/format-text-with-markdown)' course, by Yann Holtz
+
+# Data and Libraries
+
+
+```{r}
+#| label: libraries
+library(tidyverse)
+library(palmerpenguins)
+```
+
+
+```{r}
+#| label: load-functions
+source(file = "R/functions.r")
+```
+
+```{r}
+#| label: load-data
+
+
+
+
+# read clean data
+
+df_clean_data <- readRDS(file = "input/df_clean_data.rds")
+
+#Summary
+summary(df_clean_data)
+
+# Calculating mean bill length for different species and islands using dplyr
+df_clean_data |>
+  dplyr::filter(species == "Adelie") |>
+  group_by(island) |>
+  summarize(
+    mean_bill_length = num(mean(bill_length_mm, na.rm = TRUE), digits = 2)
+  )
+
+# Use function in functions.r
+
+create_scatterplot(df_clean_data, "Adelie", "Torgersen") 
+
+
+```
+
+## Data Source
+
+```{r}
+citation("palmerpenguins")
+```
+
+The `palmerpenguins` package was created and shared by Kristen Gorman, a researcher at the Palmer Station in Antarctica. It contains data about 344 penguins, including three species of penguins on three different islands. The package is licensed under a [CC-0](https://creativecommons.org/public-domain/cc0/) license.
+
+
+# Descriptive Stats
