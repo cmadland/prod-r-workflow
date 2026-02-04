@@ -1,22 +1,27 @@
 # Introduction
-This page is an output from the '[Productive R Workflow](https://www.productive-r-workflow.com/r/module2/format-text-with-markdown)' course, by Yann Holtz
+This page is an output from the '[Productive R Workflow](https://www.productive-r-workflow.com/r/module2/format-text-with-markdown)' course, by Yann Holtz. 
+
+::: {.callout}
+Note that I used Positron as my IDE, rather than R Studio, so there are some differences.
+:::
 
 # Data and Libraries
 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 #| label: libraries
 library(tidyverse)
 library(palmerpenguins)
+library(hrbrthemes)
 ```
 
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 #| label: load-functions
 source(file = "R/functions.r")
 ```
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 #| label: load-data
 
 
@@ -25,6 +30,12 @@ source(file = "R/functions.r")
 # read clean data
 
 df_clean_data <- readRDS(file = "input/df_clean_data.rds")
+
+```
+
+![What are the Bill Measurements?](assets/culmen_depth.png){width=300}
+
+```{r}
 
 #Summary
 summary(df_clean_data)
@@ -46,7 +57,7 @@ create_scatterplot(df_clean_data, "Adelie", "Torgersen")
 
 ## Data Source
 
-```{r}
+```{r, warning=FALSE, message=FALSE}
 citation("palmerpenguins")
 ```
 

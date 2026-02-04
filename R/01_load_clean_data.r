@@ -4,7 +4,7 @@ library(tidyverse)
 
 # Load data
 
-df <- read_csv("input/data.csv", na = "NA")
+df <- read_excel("input/data.xlsx", na = "NA")
 
 # Remove 2 rows
 df_clean_data <- df |>
