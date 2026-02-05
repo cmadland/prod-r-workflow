@@ -59,3 +59,5 @@ f <- function(number) {
 # Use the function
 create_scatterplot(data, "Adelie", "Dream")
 create_scatterplot(data, "Adelie", "Biscoe")
+
+

@@ -1,3 +1,17 @@
+---
+title: "Exploring the Simpson's Paradox Within the Penguin Dataset"
+format:
+  html:
+    code-fold: true
+    code-summary: "Show the code"
+    toc: true
+    toc-location: left
+    toc-title: " "
+    number-sections: true
+# editor: source
+fig-cap-location: margin
+---
+
 # Introduction
 This page is an output from the '[Productive R Workflow](https://www.productive-r-workflow.com/r/module2/format-text-with-markdown)' course, by Yann Holtz. 
 
@@ -7,13 +21,18 @@ Note that I used Positron as my IDE, rather than R Studio, so there are some dif
 
 # Data and Libraries
 
+Gotta load some libraries before we go...
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: libraries
 library(tidyverse)
 library(palmerpenguins)
 library(hrbrthemes)
+library(patchwork)
+library(tinytable)
 ```
+
+Then we need to have some data to work with. We cleaned the data in a previous step and created a couple of functions.
 
 
 ```{r, warning=FALSE, message=FALSE}
@@ -23,45 +42,99 @@ source(file = "R/functions.r")
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: load-data
-
-
-
-
 # read clean data
 
 df_clean_data <- readRDS(file = "input/df_clean_data.rds")
 
 ```
 
+A bit of context for what we are talking about.
+
 ![What are the Bill Measurements?](assets/culmen_depth.png){width=300}
 
-```{r}
+# Exploring the data
 
-#Summary
-summary(df_clean_data)
+Here is a scatterplot of all the data comparing bill length with bill depth. What do you notice? What do you wonder?
 
-# Calculating mean bill length for different species and islands using dplyr
-df_clean_data |>
-  dplyr::filter(species == "Adelie") |>
-  group_by(island) |>
-  summarize(
-    mean_bill_length = num(mean(bill_length_mm, na.rm = TRUE), digits = 2)
-  )
-
-# Use function in functions.r
-
-create_scatterplot(df_clean_data, "Adelie", "Torgersen") 
-
-
+```{r, warning=FALSE, message=FALSE}
+#| label: plot_length_v_depth
+df_clean_data |> 
+  ggplot(
+    aes(x = bill_length_mm, y = bill_depth_mm)
+  ) +
+    geom_point(color="#69b3a2") +
+    labs(
+      x = "Bill Length (mm)",
+      y = "Bill Depth (mm)",
+      title = paste("Bill length x Bill Depth")
+    ) + 
+  theme_ipsum()
 ```
 
-## Data Source
+## Averages by Species
+
+The following tables show the average bill length and depth by species.
+
+```{r, warning=FALSE, message=FALSE}
+#| layout-ncol: 2
+#| label: summarize_averages
+
+average_length <- df_clean_data |> 
+   group_by(species) |> 
+  summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE))
+
+tt(average_length)
+
+
+bill_length_chinstrap <- df_clean_data |> 
+ group_by(species) |> 
+  summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE)) |> 
+  filter(species == "Chinstrap") |> 
+  pull(average_bill_length) |> 
+  round(2)
+
+  
+average_depth <- df_clean_data |> 
+ group_by(species) |> 
+  summarise(average_bill_depth = mean(bill_depth_mm, na.rm = TRUE))
+
+tt(average_depth)
+
+bill_depth_chinstrap <- df_clean_data |> 
+ group_by(species) |> 
+  summarise(average_bill_depth = mean(bill_depth_mm, na.rm = TRUE)) |> 
+  filter(species == "Chinstrap") |> 
+  pull(average_bill_depth) |> 
+  round(2)
+```
+As you can see the average bill length for the Chinstrap penguin is `r bill_length_chinstrap`, and the average bill depth for the Chinstrap penguin is `r bill_depth_chinstrap`.
+
+## Plotting by Species
+
+```{r, warning=FALSE, message=FALSE}
+#| fig-cap:  "There is actually a positive correlation when split by species."
+#| fig-cap-location: margin
+#| fig.height: 3 
+#| fig.width: 9
+# Use function in functions.r
+
+p1 <- create_scatterplot(df_clean_data, "Adelie", "#6689c6") 
+p2 <- create_scatterplot(df_clean_data, "Gentoo", "#e85252") 
+p3 <- create_scatterplot(df_clean_data, "Chinstrap", "#9a6fb0") 
+p1 + p2 + p3
+```
+
+
+
+
+### Sample latex
+
+$$E=mc^2$$
+
+# Thank you!
+
+The `palmerpenguins` package was created and shared by Kristen Gorman, a researcher at the Palmer Station in Antarctica. It contains data about 344 penguins, including three species of penguins on three different islands. The package is licensed under a [CC-0](https://creativecommons.org/public-domain/cc0/) license.
 
 ```{r, warning=FALSE, message=FALSE}
 citation("palmerpenguins")
 ```
-
-The `palmerpenguins` package was created and shared by Kristen Gorman, a researcher at the Palmer Station in Antarctica. It contains data about 344 penguins, including three species of penguins on three different islands. The package is licensed under a [CC-0](https://creativecommons.org/public-domain/cc0/) license.
-
-
-# Descriptive Stats
