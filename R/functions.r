@@ -39,3 +39,12 @@ df_clean_data <- readRDS(file = "input/df_clean_data.rds")
 avg_mass <- num(mean(df_clean_data$body_mass_g, na.rm = TRUE), digits = 2)
 
 avg_mass
+
+cmad_theme <- function() {
+  theme_ipsum() +
+    theme(
+      plot.title = element_text(color = "#69b3a2", size = 18, face = "bold"),
+      axis.text.x = element_text(size = 7),
+      axis.text.y = element_text(size = 7)
+    )
+}

@@ -1,5 +1,7 @@
 ---
-title: "Exploring the Simpson's Paradox Within the Penguin Dataset"
+title: "Paradoxically Simpson"
+subtitle: "Using pingwings to learn about data analysis and Quarto"
+description: "This page is an output from the ‘Productive R Workflow’ course, by Yann Holtz."
 format:
   html:
     code-fold: true
@@ -10,10 +12,19 @@ format:
     number-sections: true
 # editor: source
 fig-cap-location: margin
+# author: 
+name: "Colin Madland"
+affiliation: "Independant 😀"
+email: colin@madland.ca
+title-block-banner: "#f0f3f5"
+title-block-banner-color: "black"
+
+keywords: "Quarto, Paradox, Data Analysis"
+date: today
 ---
 
 # Introduction
-This page is an output from the '[Productive R Workflow](https://www.productive-r-workflow.com/r/module2/format-text-with-markdown)' course, by Yann Holtz. 
+
 
 ::: {.callout}
 Note that I used Positron as my IDE, rather than R Studio, so there are some differences.
@@ -30,18 +41,20 @@ library(palmerpenguins)
 library(hrbrthemes)
 library(patchwork)
 library(tinytable)
+library(DT)
+library(knitr)
+library(plotly)
+data(iris)
 ```
 
 Then we need to have some data to work with. We cleaned the data in a previous step and created a couple of functions.
 
 
 ```{r, warning=FALSE, message=FALSE}
-#| label: load-functions
+#| label: load-data-functions
 source(file = "R/functions.r")
-```
 
-```{r, warning=FALSE, message=FALSE}
-#| label: load-data
+# load-data
 # read clean data
 
 df_clean_data <- readRDS(file = "input/df_clean_data.rds")
@@ -58,7 +71,7 @@ Here is a scatterplot of all the data comparing bill length with bill depth. Wha
 
 ```{r, warning=FALSE, message=FALSE}
 #| label: plot_length_v_depth
-df_clean_data |> 
+plotly <- df_clean_data |> 
   ggplot(
     aes(x = bill_length_mm, y = bill_depth_mm)
   ) +
@@ -66,9 +79,11 @@ df_clean_data |>
     labs(
       x = "Bill Length (mm)",
       y = "Bill Depth (mm)",
-      title = paste("Bill length x Bill Depth")
+      title = paste("Bill Length x Bill Depth")
     ) + 
   theme_ipsum()
+
+ggplotly(plotly)
 ```
 
 ## Averages by Species
@@ -83,7 +98,7 @@ average_length <- df_clean_data |>
    group_by(species) |> 
   summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE))
 
-tt(average_length)
+kable(average_length)
 
 
 bill_length_chinstrap <- df_clean_data |> 
@@ -98,7 +113,7 @@ average_depth <- df_clean_data |>
  group_by(species) |> 
   summarise(average_bill_depth = mean(bill_depth_mm, na.rm = TRUE))
 
-tt(average_depth)
+kable(average_depth)
 
 bill_depth_chinstrap <- df_clean_data |> 
  group_by(species) |> 
@@ -125,7 +140,38 @@ p1 + p2 + p3
 ```
 
 
+# Module 3
 
+## DataTable
+
+```{r}
+#| Label: datatable
+datatable(df_clean_data,
+  filter = "top",
+)
+```
+
+## knitr
+
+```{r}
+#| label: knitr-table
+# Compute some result
+bill_length_per_species <- df_clean_data %>% group_by(species) %>% 
+  summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE))
+
+# Display in the Quarto report
+kable(bill_length_per_species)
+
+```
+
+## Personal ggplot theme
+
+```{r}
+ggplot(mtcars, aes(x = mpg, y = wt)) +
+  geom_point() +
+  labs(title = "Customized Scatterplot", x = "Miles Per Gallon", y = "Weight")  +
+  cmad_theme()
+```
 
 ### Sample latex
 

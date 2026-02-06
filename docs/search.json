@@ -9,22 +9,43 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Exploring the Simpson’s Paradox Within the Penguin Dataset",
+    "title": "Paradoxically Simpson",
     "section": "",
-    "text": "This page is an output from the ‘Productive R Workflow’ course, by Yann Holtz.\n\n\n\n\n\n\nNote that I used Positron as my IDE, rather than R Studio, so there are some differences."
+    "text": "Note that I used Positron as my IDE, rather than R Studio, so there are some differences."
   },
   {
     "objectID": "index.html#averages-by-species",
     "href": "index.html#averages-by-species",
-    "title": "Exploring the Simpson’s Paradox Within the Penguin Dataset",
+    "title": "Paradoxically Simpson",
     "section": "3.1 Averages by Species",
-    "text": "3.1 Averages by Species\nThe following tables show the average bill length and depth by species.\n\nShow the code\naverage_length &lt;- df_clean_data |&gt; \n   group_by(species) |&gt; \n  summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE))\n\ntt(average_length)\nbill_length_chinstrap &lt;- df_clean_data |&gt; \n group_by(species) |&gt; \n  summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE)) |&gt; \n  filter(species == \"Chinstrap\") |&gt; \n  pull(average_bill_length) |&gt; \n  round(2)\n\n  \naverage_depth &lt;- df_clean_data |&gt; \n group_by(species) |&gt; \n  summarise(average_bill_depth = mean(bill_depth_mm, na.rm = TRUE))\n\ntt(average_depth)\nbill_depth_chinstrap &lt;- df_clean_data |&gt; \n group_by(species) |&gt; \n  summarise(average_bill_depth = mean(bill_depth_mm, na.rm = TRUE)) |&gt; \n  filter(species == \"Chinstrap\") |&gt; \n  pull(average_bill_depth) |&gt; \n  round(2)\n\n\n\n\n\n\n    \n\n    \n\n    \n    \n    \n      \n        \n        \n              \n                species\n                average_bill_length\n              \n        \n        \n        \n                \n                  Adelie\n                  38.80872\n                \n                \n                  Chinstrap\n                  48.83382\n                \n                \n                  Gentoo\n                  47.50488\n                \n        \n      \n    \n\n\n\n\n\n    \n\n    \n\n    \n    \n    \n      \n        \n        \n              \n                species\n                average_bill_depth\n              \n        \n        \n        \n                \n                  Adelie\n                  18.34228\n                \n                \n                  Chinstrap\n                  18.42059\n                \n                \n                  Gentoo\n                  14.98211\n                \n        \n      \n    \n\n\n\n\nAs you can see the average bill length for the Chinstrap penguin is 48.83, and the average bill depth for the Chinstrap penguin is 18.42."
+    "text": "3.1 Averages by Species\nThe following tables show the average bill length and depth by species.\n\nShow the code\naverage_length &lt;- df_clean_data |&gt; \n   group_by(species) |&gt; \n  summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE))\n\nkable(average_length)\nbill_length_chinstrap &lt;- df_clean_data |&gt; \n group_by(species) |&gt; \n  summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE)) |&gt; \n  filter(species == \"Chinstrap\") |&gt; \n  pull(average_bill_length) |&gt; \n  round(2)\n\n  \naverage_depth &lt;- df_clean_data |&gt; \n group_by(species) |&gt; \n  summarise(average_bill_depth = mean(bill_depth_mm, na.rm = TRUE))\n\nkable(average_depth)\nbill_depth_chinstrap &lt;- df_clean_data |&gt; \n group_by(species) |&gt; \n  summarise(average_bill_depth = mean(bill_depth_mm, na.rm = TRUE)) |&gt; \n  filter(species == \"Chinstrap\") |&gt; \n  pull(average_bill_depth) |&gt; \n  round(2)\n\n\n\n\n\n\n\nspecies\naverage_bill_length\n\n\n\n\nAdelie\n38.80872\n\n\nChinstrap\n48.83382\n\n\nGentoo\n47.50488\n\n\n\n\n\n\n\n\nspecies\naverage_bill_depth\n\n\n\n\nAdelie\n18.34228\n\n\nChinstrap\n18.42059\n\n\nGentoo\n14.98211\n\n\n\n\n\n\nAs you can see the average bill length for the Chinstrap penguin is 48.83, and the average bill depth for the Chinstrap penguin is 18.42."
   },
   {
     "objectID": "index.html#plotting-by-species",
     "href": "index.html#plotting-by-species",
-    "title": "Exploring the Simpson’s Paradox Within the Penguin Dataset",
+    "title": "Paradoxically Simpson",
     "section": "3.2 Plotting by Species",
-    "text": "3.2 Plotting by Species\n\n\nShow the code\n# Use function in functions.r\n\np1 &lt;- create_scatterplot(df_clean_data, \"Adelie\", \"#6689c6\") \np2 &lt;- create_scatterplot(df_clean_data, \"Gentoo\", \"#e85252\") \np3 &lt;- create_scatterplot(df_clean_data, \"Chinstrap\", \"#9a6fb0\") \np1 + p2 + p3\n\n\n\n\n\nThere is actually a positive correlation when split by species.\n\n\n\n\n\n3.2.1 Sample latex\n\\[E=mc^2\\]"
+    "text": "3.2 Plotting by Species\n\n\nShow the code\n# Use function in functions.r\n\np1 &lt;- create_scatterplot(df_clean_data, \"Adelie\", \"#6689c6\") \np2 &lt;- create_scatterplot(df_clean_data, \"Gentoo\", \"#e85252\") \np3 &lt;- create_scatterplot(df_clean_data, \"Chinstrap\", \"#9a6fb0\") \np1 + p2 + p3\n\n\n\n\n\nThere is actually a positive correlation when split by species."
+  },
+  {
+    "objectID": "index.html#datatable",
+    "href": "index.html#datatable",
+    "title": "Paradoxically Simpson",
+    "section": "4.1 DataTable",
+    "text": "4.1 DataTable\n\n\nShow the code\ndatatable(df_clean_data,\n  filter = \"top\",\n)"
+  },
+  {
+    "objectID": "index.html#knitr",
+    "href": "index.html#knitr",
+    "title": "Paradoxically Simpson",
+    "section": "4.2 knitr",
+    "text": "4.2 knitr\n\n\nShow the code\n# Compute some result\nbill_length_per_species &lt;- df_clean_data %&gt;% group_by(species) %&gt;% \n  summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE))\n\n# Display in the Quarto report\nkable(bill_length_per_species)\n\n\n\n\n\nspecies\naverage_bill_length\n\n\n\n\nAdelie\n38.80872\n\n\nChinstrap\n48.83382\n\n\nGentoo\n47.50488"
+  },
+  {
+    "objectID": "index.html#personal-ggplot-theme",
+    "href": "index.html#personal-ggplot-theme",
+    "title": "Paradoxically Simpson",
+    "section": "4.3 Personal ggplot theme",
+    "text": "4.3 Personal ggplot theme\n\n\nShow the code\nggplot(mtcars, aes(x = mpg, y = wt)) +\n  geom_point() +\n  labs(title = \"Customized Scatterplot\", x = \"Miles Per Gallon\", y = \"Weight\")  +\n  cmad_theme()\n\n\n\n\n\n\n\n\n\n\n4.3.1 Sample latex\n\\[E=mc^2\\]"
   }
 ]
